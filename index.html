@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perpetual RAG — 永續性知識管理系統</title>
+<style>
+  :root {
+    --bg:       #0f1117;
+    --bg2:      #1a1d2e;
+    --bg3:      #232640;
+    --accent:   #4f8ef7;
+    --accent2:  #7c5cbf;
+    --green:    #27ae60;
+    --orange:   #e67e22;
+    --text:     #e8eaf0;
+    --muted:    #8892a4;
+    --border:   #2e3250;
+    --radius:   12px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    line-height: 1.7;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(15,17,23,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 56px;
+  }
+  .nav-logo { font-weight: 700; font-size: 1rem; color: var(--accent); letter-spacing: .5px; }
+  .nav-links { display: flex; gap: 1.8rem; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .2s; }
+  .nav-links a:hover { color: var(--text); }
+
+  /* ── HERO ── */
+  .hero {
+    text-align: center;
+    padding: 7rem 1rem 5rem;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(79,142,247,.12) 0%, transparent 70%);
+  }
+  .badge {
+    display: inline-block;
+    background: rgba(79,142,247,.15);
+    border: 1px solid rgba(79,142,247,.3);
+    color: var(--accent);
+    border-radius: 99px;
+    padding: .3rem 1rem;
+    font-size: .8rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: .5px;
+  }
+  h1 {
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 1.2rem;
+    background: linear-gradient(135deg, #fff 30%, var(--accent));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero-sub {
+    color: var(--muted); font-size: clamp(.95rem, 2vw, 1.15rem);
+    max-width: 600px; margin: 0 auto 2.5rem;
+  }
+  .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: .5rem;
+    padding: .75rem 1.8rem; border-radius: var(--radius);
+    font-size: .95rem; font-weight: 600; text-decoration: none;
+    cursor: pointer; border: none; transition: all .2s;
+  }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: #6fa3ff; transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── STATS ── */
+  .stats {
+    display: flex; justify-content: center; flex-wrap: wrap;
+    gap: 1px; background: var(--border);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    max-width: 800px; margin: 3rem auto 0; overflow: hidden;
+  }
+  .stat {
+    background: var(--bg2); flex: 1; min-width: 140px;
+    padding: 1.5rem 1rem; text-align: center;
+  }
+  .stat-val { font-size: 2rem; font-weight: 800; color: var(--accent); }
+  .stat-label { font-size: .8rem; color: var(--muted); margin-top: .2rem; }
+
+  /* ── SECTION ── */
+  section { padding: 5rem 1rem; max-width: 1000px; margin: 0 auto; }
+  h2 {
+    font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 700;
+    margin-bottom: .5rem;
+  }
+  .section-sub { color: var(--muted); margin-bottom: 2.5rem; }
+
+  /* ── INSTALL TABS ── */
+  .tabs { display: flex; gap: .5rem; margin-bottom: 1.2rem; flex-wrap: wrap; }
+  .tab {
+    padding: .5rem 1.2rem; border-radius: 8px; font-size: .9rem;
+    cursor: pointer; border: 1px solid var(--border);
+    background: transparent; color: var(--muted); transition: all .15s;
+  }
+  .tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  .code-block {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    position: relative;
+    overflow-x: auto;
+  }
+  .code-block pre { font-family: "SF Mono", "Fira Code", monospace; font-size: .9rem; line-height: 1.7; }
+  .code-comment { color: var(--muted); }
+  .code-cmd { color: #7dd3fc; }
+  .code-flag { color: #86efac; }
+  .code-str { color: #fbbf24; }
+  .copy-btn {
+    position: absolute; top: .8rem; right: .8rem;
+    background: var(--bg3); border: 1px solid var(--border);
+    color: var(--muted); border-radius: 6px;
+    padding: .3rem .7rem; font-size: .8rem;
+    cursor: pointer; transition: all .15s;
+  }
+  .copy-btn:hover { color: var(--text); border-color: var(--accent); }
+  .os-note {
+    margin-top: .8rem; padding: .75rem 1rem;
+    background: rgba(79,142,247,.08);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    font-size: .88rem; color: var(--muted);
+  }
+
+  /* ── OS MATRIX ── */
+  .matrix {
+    width: 100%; border-collapse: collapse; margin-top: 2rem;
+    font-size: .9rem;
+  }
+  .matrix th {
+    background: var(--bg3); padding: .75rem 1rem;
+    text-align: center; color: var(--muted); font-weight: 600;
+    border: 1px solid var(--border);
+  }
+  .matrix th:first-child { text-align: left; }
+  .matrix td {
+    padding: .75rem 1rem; text-align: center;
+    border: 1px solid var(--border); background: var(--bg2);
+  }
+  .matrix td:first-child { text-align: left; font-family: monospace; color: var(--accent); }
+  .yes { color: var(--green); font-size: 1.1rem; }
+  .no  { color: #e74c3c; font-size: 1.1rem; }
+  .partial { color: var(--orange); font-size: .8rem; }
+
+  /* ── HOW IT WORKS ── */
+  .arch {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.2rem; margin-top: 2rem;
+  }
+  .arch-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.8rem;
+    transition: border-color .2s;
+  }
+  .arch-card:hover { border-color: var(--accent); }
+  .arch-icon { font-size: 2rem; margin-bottom: .8rem; }
+  .arch-title { font-size: 1.05rem; font-weight: 700; margin-bottom: .4rem; }
+  .arch-role {
+    display: inline-block; font-size: .75rem;
+    background: rgba(79,142,247,.15); color: var(--accent);
+    border-radius: 99px; padding: .15rem .7rem; margin-bottom: .8rem;
+  }
+  .arch-desc { font-size: .88rem; color: var(--muted); }
+
+  /* ── DEFENSE ── */
+  .defense { display: flex; flex-direction: column; gap: .8rem; margin-top: 2rem; }
+  .defense-row {
+    display: flex; align-items: center; gap: 1rem;
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1rem 1.5rem;
+  }
+  .defense-num {
+    width: 2rem; height: 2rem; min-width: 2rem;
+    background: var(--accent); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: .9rem; color: #fff;
+  }
+  .defense-info strong { font-size: .95rem; }
+  .defense-info span { font-size: .85rem; color: var(--muted); display: block; }
+
+  /* ── COMMANDS ── */
+  .cmd-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: .8rem; margin-top: 1.5rem;
+  }
+  .cmd-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1rem 1.2rem;
+  }
+  .cmd-card code {
+    display: block; font-family: monospace;
+    color: var(--accent); font-size: .88rem; margin-bottom: .4rem;
+  }
+  .cmd-card p { font-size: .82rem; color: var(--muted); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 1rem; text-align: center;
+    color: var(--muted); font-size: .88rem;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+  .footer-links { display: flex; gap: 1.5rem; justify-content: center; margin-top: .8rem; flex-wrap: wrap; }
+
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    .hero { padding: 4rem 1rem 3rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">⚡ Perpetual RAG</span>
+  <div class="nav-links">
+    <a href="#install">安裝</a>
+    <a href="#how">架構</a>
+    <a href="#defense">防幻覺</a>
+    <a href="#commands">指令</a>
+    <a href="https://github.com/quanfu2026/perpetual-rag" target="_blank">GitHub</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge">ILT2026 國際研討會論文系統</div>
+  <h1>永續性知識管理系統<br>Perpetual RAG</h1>
+  <p class="hero-sub">
+    基於 Obsidian × NotebookLM × Claude Code 三層架構，<br>
+    將 AI 幻覺率從 59% 降至 3%，無需 GPU，任何電腦皆可執行。
+  </p>
+  <div class="hero-btns">
+    <a href="#install" class="btn btn-primary">▼ 立即安裝</a>
+    <a href="https://github.com/quanfu2026/perpetual-rag" target="_blank" class="btn btn-outline">★ GitHub</a>
+    <a href="starter_kit/SETUP.md" class="btn btn-outline">📖 完整文件</a>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-val">3%</div><div class="stat-label">幻覺率（基準 59%）</div></div>
+    <div class="stat"><div class="stat-val">↓76%</div><div class="stat-label">Token 消耗</div></div>
+    <div class="stat"><div class="stat-val">120MB</div><div class="stat-label">RAM 峰值</div></div>
+    <div class="stat"><div class="stat-val">6 秒</div><div class="stat-label">跨 Session 恢復</div></div>
+    <div class="stat"><div class="stat-val">7 支</div><div class="stat-label">自動化腳本</div></div>
+  </div>
+</div>
+
+<!-- INSTALL -->
+<section id="install">
+  <h2>一鍵安裝</h2>
+  <p class="section-sub">選擇你的作業系統，複製指令，30 秒完成環境準備。</p>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('mac')">🍎 Mac / Linux</button>
+    <button class="tab" onclick="switchTab('win')">🪟 Windows</button>
+    <button class="tab" onclick="switchTab('pip')">🐍 pip（跨平台）</button>
+    <button class="tab" onclick="switchTab('zip')">📦 zip 下載</button>
+  </div>
+
+  <!-- Mac/Linux -->
+  <div class="tab-panel active" id="tab-mac">
+    <div class="code-block">
+      <button class="copy-btn" onclick="copy(this, 'curl -fsSL https://raw.githubusercontent.com/quanfu2026/perpetual-rag/master/starter_kit/install.sh | bash')">複製</button>
+      <pre><span class="code-comment"># 一行指令完成所有安裝</span>
+<span class="code-cmd">curl</span> <span class="code-flag">-fsSL</span> https://raw.githubusercontent.com/quanfu2026/perpetual-rag/master/starter_kit/install.sh <span class="code-cmd">|</span> bash</pre>
+    </div>
+    <div class="os-note">
+      自動完成：偵測 OS → 安裝 Python 套件 → 安裝 Claude Code CLI → 建立知識庫 → 驗證安裝（5 步驟）
+    </div>
+
+    <div class="code-block" style="margin-top:1rem">
+      <button class="copy-btn" onclick="copy(this, 'bash install.sh --vault ~/my_KnowledgeBase --project &quot;我的研究&quot;')">複製</button>
+      <pre><span class="code-comment"># 指定知識庫路徑與專案名稱</span>
+<span class="code-cmd">bash</span> install.sh <span class="code-flag">--vault</span> <span class="code-str">~/my_KnowledgeBase</span> <span class="code-flag">--project</span> <span class="code-str">"我的研究"</span></pre>
+    </div>
+  </div>
+
+  <!-- Windows -->
+  <div class="tab-panel" id="tab-win">
+    <div class="code-block">
+      <button class="copy-btn" onclick="copy(this, 'pip install perpetual-rag\nperpetual-rag init --vault C:\\my_KnowledgeBase --project &quot;我的研究&quot;')">複製</button>
+      <pre><span class="code-comment"># Step 1：安裝套件</span>
+<span class="code-cmd">pip</span> install perpetual-rag
+
+<span class="code-comment"># Step 2：初始化知識庫</span>
+<span class="code-cmd">perpetual-rag</span> init <span class="code-flag">--vault</span> <span class="code-str">C:\my_KnowledgeBase</span> <span class="code-flag">--project</span> <span class="code-str">"我的研究"</span></pre>
+    </div>
+    <div class="os-note">
+      需先安裝 <a href="https://python.org/downloads/" target="_blank" style="color:var(--accent)">Python 3.8+</a>（安裝時勾選「Add Python to PATH」）
+    </div>
+  </div>
+
+  <!-- pip -->
+  <div class="tab-panel" id="tab-pip">
+    <div class="code-block">
+      <button class="copy-btn" onclick="copy(this, 'pip install perpetual-rag\nperpetual-rag init --vault ~/my_KnowledgeBase --project &quot;我的研究&quot;')">複製</button>
+      <pre><span class="code-cmd">pip</span> install perpetual-rag
+<span class="code-cmd">perpetual-rag</span> init <span class="code-flag">--vault</span> <span class="code-str">~/my_KnowledgeBase</span> <span class="code-flag">--project</span> <span class="code-str">"我的研究"</span></pre>
+    </div>
+    <div class="os-note">Mac、Linux、Windows 全平台適用。需 Python 3.8+。</div>
+  </div>
+
+  <!-- zip -->
+  <div class="tab-panel" id="tab-zip">
+    <div class="code-block">
+      <button class="copy-btn" onclick="copy(this, 'python3 scripts/setup.py --vault ~/my_KnowledgeBase --project &quot;我的研究&quot;')">複製</button>
+      <pre><span class="code-comment"># 1. 下載 zip 並解壓</span>
+<span class="code-comment">#    https://github.com/quanfu2026/perpetual-rag/releases/latest</span>
+
+<span class="code-comment"># 2. 進入解壓後的資料夾</span>
+<span class="code-cmd">cd</span> perpetual-rag-v1.0.0
+
+<span class="code-comment"># 3. 執行初始化</span>
+<span class="code-cmd">python3</span> scripts/setup.py <span class="code-flag">--vault</span> <span class="code-str">~/my_KnowledgeBase</span> <span class="code-flag">--project</span> <span class="code-str">"我的研究"</span></pre>
+    </div>
+    <div class="os-note">
+      適合不熟悉命令列的用戶。
+      <a href="https://github.com/quanfu2026/perpetual-rag/releases/latest" target="_blank" style="color:var(--accent)">→ 前往下載頁面</a>
+    </div>
+  </div>
+
+  <!-- OS Matrix -->
+  <table class="matrix">
+    <thead>
+      <tr>
+        <th>安裝方式</th>
+        <th>🍎 Mac</th>
+        <th>🐧 Linux</th>
+        <th>🪟 Windows</th>
+        <th>需要 Python</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>curl | bash</td>
+        <td><span class="yes">✓</span></td>
+        <td><span class="yes">✓</span></td>
+        <td><span class="partial">需 WSL</span></td>
+        <td>自動安裝</td>
+      </tr>
+      <tr>
+        <td>pip install</td>
+        <td><span class="yes">✓</span></td>
+        <td><span class="yes">✓</span></td>
+        <td><span class="yes">✓</span></td>
+        <td>需先安裝</td>
+      </tr>
+      <tr>
+        <td>zip 下載</td>
+        <td><span class="yes">✓</span></td>
+        <td><span class="yes">✓</span></td>
+        <td><span class="yes">✓</span></td>
+        <td>需先安裝</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" style="background:var(--bg2); max-width:100%; padding:5rem 1rem;">
+  <div style="max-width:1000px; margin:0 auto;">
+    <h2>三層知識解耦架構</h2>
+    <p class="section-sub">每個工具只負責一件事，互不重疊——這是幻覺率大幅降低的根本原因。</p>
+    <div class="arch">
+      <div class="arch-card">
+        <div class="arch-icon">🗄️</div>
+        <div class="arch-title">Obsidian</div>
+        <div class="arch-role">儲存層</div>
+        <p class="arch-desc">結構化知識 + 雙向連結 + BM25 路徑召回。只管「資料在哪、長什麼格式」，磁碟 I/O ↓99%。</p>
+      </div>
+      <div class="arch-card">
+        <div class="arch-icon">🧠</div>
+        <div class="arch-title">NotebookLM</div>
+        <div class="arch-role">理解層</div>
+        <p class="arch-desc">Source-grounded 語意問答，段落級來源綁定。只管「語意是什麼、引用哪篇」，引用完整性 67% → 100%。</p>
+      </div>
+      <div class="arch-card">
+        <div class="arch-icon">⚡</div>
+        <div class="arch-title">Claude Code</div>
+        <div class="arch-role">執行層</div>
+        <p class="arch-desc">AI 代理 + 自動化腳本 + 跨 Session 記憶。只管「現在做什麼、如何操作」，Token ↓76%。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEFENSE -->
+<section id="defense">
+  <h2>五層防幻覺框架</h2>
+  <p class="section-sub">覆蓋知識全生命週期的系統性防禦鏈，幻覺率 59% → 3%（-95%）。</p>
+  <div class="defense">
+    <div class="defense-row">
+      <div class="defense-num">1</div>
+      <div class="defense-info">
+        <strong>攝取時 — Source-grounded 來源綁定</strong>
+        <span>NotebookLM 強制每個答案附段落級來源標注，封鎖輸入端幻覺</span>
+      </div>
+    </div>
+    <div class="defense-row">
+      <div class="defense-num">2</div>
+      <div class="defense-info">
+        <strong>檢索時 — BM25 詞彙精確召回</strong>
+        <span>bm25_search.py 路徑召回，避免全文注入，查詢 0.38–0.41 秒</span>
+      </div>
+    </div>
+    <div class="defense-row">
+      <div class="defense-num">3</div>
+      <div class="defense-info">
+        <strong>寫入時 — CLAUDE.md 行為約束</strong>
+        <span>每次開工自動載入規範，確保 AI 代理遵守引用規則</span>
+      </div>
+    </div>
+    <div class="defense-row">
+      <div class="defense-num">4</div>
+      <div class="defense-info">
+        <strong>審計時 — hallucination_guard.py 全文掃描</strong>
+        <span>偵測無來源引用的百分比數據與研究聲明，112 警告 → 0</span>
+      </div>
+    </div>
+    <div class="defense-row">
+      <div class="defense-num">5</div>
+      <div class="defense-info">
+        <strong>一致性 — consistency_check.py 跨章節稽核</strong>
+        <span>自動偵測術語矛盾，確保整篇論文用語統一</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMMANDS -->
+<section id="commands" style="background:var(--bg2); max-width:100%; padding:5rem 1rem;">
+  <div style="max-width:1000px; margin:0 auto;">
+    <h2>七支自動化腳本</h2>
+    <p class="section-sub">安裝完成後即可使用，全部在 <code style="color:var(--accent)">scripts/</code> 資料夾。</p>
+    <div class="cmd-grid">
+      <div class="cmd-card">
+        <code>perpetual-rag init</code>
+        <p>建立新知識庫，自動生成所有系統文件</p>
+      </div>
+      <div class="cmd-card">
+        <code>perpetual-rag search</code>
+        <p>BM25 精準關鍵字搜尋，0.4 秒回傳結果</p>
+      </div>
+      <div class="cmd-card">
+        <code>perpetual-rag audit</code>
+        <p>防幻覺掃描，標記無來源引用的論點</p>
+      </div>
+      <div class="cmd-card">
+        <code>perpetual-rag graph</code>
+        <p>生成知識圖譜，輸出 Canvas / JSON / DOT</p>
+      </div>
+      <div class="cmd-card">
+        <code>perpetual-rag bump</code>
+        <p>互動式版本升級，自動更新日誌與責任記錄</p>
+      </div>
+      <div class="cmd-card">
+        <code>consistency_check.py</code>
+        <p>跨章節術語一致性稽核，自動偵測矛盾</p>
+      </div>
+      <div class="cmd-card">
+        <code>daily_audit.py</code>
+        <p>每日進度快照，知識庫健康狀態監控</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <strong>Perpetual RAG</strong> — 永續性知識管理系統 v1.0.0
+  </div>
+  <div class="footer-links">
+    <a href="https://github.com/quanfu2026/perpetual-rag" target="_blank">★ GitHub</a>
+    <a href="https://github.com/quanfu2026/perpetual-rag/releases/latest" target="_blank">⬇ 下載</a>
+    <a href="starter_kit/SETUP.md">📖 完整文件</a>
+    <a href="https://github.com/quanfu2026/perpetual-rag/issues" target="_blank">🐛 回報問題</a>
+  </div>
+  <div style="margin-top:1rem; font-size:.8rem;">
+    論文：「永續性知識管理：基於 Obsidian-NotebookLM-Claude Code 三層架構的防幻覺 RAG 框架」
+    — ILT2026 國際學習科技研討會
+  </div>
+</footer>
+
+<script>
+function switchTab(id) {
+  document.querySelectorAll('.tab').forEach((t,i) => {
+    const ids = ['mac','win','pip','zip'];
+    t.classList.toggle('active', ids[i] === id);
+  });
+  document.querySelectorAll('.tab-panel').forEach(p => {
+    p.classList.toggle('active', p.id === 'tab-' + id);
+  });
+}
+
+function copy(btn, text) {
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✓ 已複製';
+    setTimeout(() => btn.textContent = '複製', 2000);
+  });
+}
+</script>
+</body>
+</html>
