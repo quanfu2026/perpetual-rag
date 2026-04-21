@@ -2,12 +2,13 @@
 
 **永續性知識管理系統** — 基於 Obsidian-NotebookLM-Claude Code 三層架構的防幻覺 RAG 框架
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue)](https://github.com/quanfu2026/perpetual-rag)
+[![Version](https://img.shields.io/badge/version-1.1.0-blue)](https://github.com/quanfu2026/perpetual-rag)
 [![Python](https://img.shields.io/badge/python-3.8+-green)](https://python.org)
 [![License](https://img.shields.io/badge/license-MIT-orange)](LICENSE)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19676404.svg)](https://doi.org/10.5281/zenodo.19676404)
 
-> 論文：「永續性知識管理：基於 Obsidian-NotebookLM-Claude Code 三層防幻覺 RAG 框架」
-> ILT2026 國際學習科技研討會
+> 論文：「永續性RAG：資源受限環境下以知識解耦實現幻覺抑制」
+> ILT2026 國際學習科技研討會 | Preprint DOI: [10.5281/zenodo.19676404](https://doi.org/10.5281/zenodo.19676404)
 
 ---
 
