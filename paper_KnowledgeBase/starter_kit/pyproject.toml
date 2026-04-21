@@ -1,6 +1,6 @@
 [build-system]
 requires = ["setuptools>=61.0", "wheel"]
-build-backend = "setuptools.backends.legacy:build"
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "perpetual-rag"
@@ -32,15 +32,15 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/YOUR/perpetual-rag"
-Documentation = "https://github.com/YOUR/perpetual-rag/blob/main/starter_kit/SETUP.md"
-Issues = "https://github.com/YOUR/perpetual-rag/issues"
+Homepage = "https://github.com/quanfu2026/perpetual-rag"
+Documentation = "https://github.com/quanfu2026/perpetual-rag/blob/main/starter_kit/SETUP.md"
+Issues = "https://github.com/quanfu2026/perpetual-rag/issues"
 
 [project.scripts]
 perpetual-rag = "perpetual_rag.cli:main"
 
 [tool.setuptools.packages.find]
-where = ["starter_kit"]
+where = ["."]
 
 [tool.setuptools.package-data]
 "perpetual_rag" = ["templates/*", "scripts/*.py"]

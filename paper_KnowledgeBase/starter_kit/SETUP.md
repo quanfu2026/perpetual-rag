@@ -21,6 +21,47 @@
 
 ---
 
+## 一鍵安裝（快速通道）
+
+> 熟悉命令列的用戶可跳過後面的逐步說明，直接使用以下指令。
+
+### Mac / Linux
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/quanfu2026/perpetual-rag/master/starter_kit/install.sh | bash
+```
+
+腳本會自動完成：偵測 OS → 安裝 Python 套件 → 安裝 Claude Code CLI → 建立知識庫 → 驗證安裝。
+
+### Windows
+
+```powershell
+pip install perpetual-rag
+perpetual-rag init --vault C:\my_KnowledgeBase --project "我的研究"
+```
+
+### 所有平台（通用）
+
+```bash
+# 方式一：pip 套件（Mac / Linux / Windows 均適用）
+pip install perpetual-rag
+perpetual-rag init --vault ~/my_KnowledgeBase --project "我的研究"
+
+# 方式二：下載 zip 解壓後執行
+# https://github.com/quanfu2026/perpetual-rag/releases/latest
+python3 scripts/setup.py --vault ~/my_KnowledgeBase --project "我的研究"
+```
+
+| 方式 | Mac | Linux | Windows | 需要 Python |
+|------|:---:|:-----:|:-------:|:-----------:|
+| `curl \| bash`（Shell 腳本）| ✅ | ✅ | ❌（需 WSL）| 自動安裝 |
+| `pip install perpetual-rag` | ✅ | ✅ | ✅ | 需先安裝 |
+| zip 下載解壓 | ✅ | ✅ | ✅ | 需先安裝 |
+
+> **不熟悉命令列？** 請繼續閱讀下方逐步說明。
+
+---
+
 ## 第一步：安裝 Obsidian（儲存層）
 
 **Obsidian 是本系統的知識儲存核心。** 所有筆記、參考文獻、章節都存放在這裡。

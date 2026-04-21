@@ -30,6 +30,14 @@ pip install perpetual-rag
 perpetual-rag init --vault ~/my_KnowledgeBase --project "我的研究專案"
 ```
 
+**zip 下載**：[GitHub Releases](https://github.com/quanfu2026/perpetual-rag/releases/latest)
+
+| 方式 | Mac | Linux | Windows |
+|------|:---:|:-----:|:-------:|
+| `curl \| bash` | ✅ | ✅ | ❌ |
+| `pip install` | ✅ | ✅ | ✅ |
+| zip 下載 | ✅ | ✅ | ✅ |
+
 ## 核心功能
 
 ```bash
