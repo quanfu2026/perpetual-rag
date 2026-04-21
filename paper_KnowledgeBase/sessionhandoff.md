@@ -20,8 +20,52 @@ linked_code:
 ---
 
 ## 📅 最後更新
-- 日期：2026-04-21（第三十五次，知識圖譜 + Starter Kit + 版本管控）
+- 日期：2026-04-21（第三十六次，三種一鍵安裝 + GitHub Pages + PyPI 待完成）
 - 狀態：收工完整 ✅
+
+---
+
+## ✅ 第三十六次（2026-04-21）— 三種一鍵安裝 + 部署（PyPI 待完成）
+
+### 完成事項
+
+| 任務 | 說明 |
+|------|------|
+| install.sh | Shell 腳本，Mac/Linux 五步驟一鍵安裝 |
+| pip 套件打包 | pyproject.toml + perpetual_rag/ CLI，品質檢查 PASSED |
+| build_release.py | zip 打包工具，完整包 41KB + 精簡包 29KB |
+| GitHub repo 建立 | https://github.com/quanfu2026/perpetual-rag |
+| GitHub Release v1.0.0 | 含兩個 zip 下載 |
+| GitHub Pages | https://quanfu2026.github.io/perpetual-rag/ ✅ 上線 |
+| index.html 安裝網站 | 深色主題，Tab 切換三種 OS，一鍵複製指令 |
+| SETUP.md OS 分流 | Mac/Linux/Windows 三種安裝方式對照表 |
+| 論文附錄 A | 四個開源資源網址 + 安裝指令 + 系統需求表 |
+| bump_version.py | 互動式升版工具（版本管控完整） |
+
+### 待辦（下次開工優先）
+
+1. **⚠️ PyPI 上傳**：Email 驗證完成後執行
+   ```
+   python3 -m twine upload ~/paper_KnowledgeBase/starter_kit/dist/perpetual_rag-1.0.0*
+   ```
+   - Username：`__token__`
+   - Password：PyPI API Token（`pypi-` 開頭）
+2. ⚠️ 重新產出 `論文_Word初審版.docx`
+3. ⚠️ 重新產出 `論文_IEEE_Overleaf.tex`
+4. ILT2026_投稿版.docx 在 Word 確認排版與頁數
+
+### 當前產出物狀態
+
+```
+GitHub Pages 網站         — ✅ https://quanfu2026.github.io/perpetual-rag/
+GitHub repo v1.0.0        — ✅ https://github.com/quanfu2026/perpetual-rag
+pip 套件（本機打包完成）   — ⚠️ 待 PyPI Email 驗證後上傳
+論文正式稿.md              — ✅ 2,786 行（含附錄 A）
+ILT2026_投稿版.docx        — ✅ 23K
+starter_kit/ v1.0.0        — ✅ git tag 定稿
+論文_Word初審版.docx       — ⚠️ 需重新產出
+論文_IEEE_Overleaf.tex    — ⚠️ 需重新產出
+```
 
 ---
 
