@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "perpetual-rag"
+version = "1.0.0"
+description = "永續性知識管理系統：基於 Obsidian-NotebookLM-Claude Code 三層防幻覺 RAG 框架"
+readme = "README_pip.md"
+license = { text = "MIT" }
+authors = [
+  { name = "chenquanfu", email = "s112000805@g.ksu.edu.tw" }
+]
+keywords = ["RAG", "knowledge-management", "hallucination", "obsidian", "claude"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+requires-python = ">=3.8"
+dependencies = [
+  "rank-bm25>=0.2.2",
+  "jieba>=0.42.1",
+  "scikit-learn>=1.0.0",
+  "pyyaml>=6.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/YOUR/perpetual-rag"
+Documentation = "https://github.com/YOUR/perpetual-rag/blob/main/starter_kit/SETUP.md"
+Issues = "https://github.com/YOUR/perpetual-rag/issues"
+
+[project.scripts]
+perpetual-rag = "perpetual_rag.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["starter_kit"]
+
+[tool.setuptools.package-data]
+"perpetual_rag" = ["templates/*", "scripts/*.py"]
