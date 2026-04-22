@@ -43,6 +43,30 @@
 
 ---
 
+## [v1.1.0] — 2026-04-21
+
+**新增跨地點同步功能與隨身碟可攜部署。**
+
+### Added
+- `scripts/setup_cloud.sh`：一次性雲端同步設定，自動偵測並支援 iCloud / Google Drive / Dropbox / OneDrive / 自訂路徑
+- `scripts/sync_push.sh`：出門前三段式推送（Git push → 隨身碟 → 雲端硬碟），含人工確認
+- `scripts/sync_pull.sh`：抵達後智慧拉取，支援 GitHub / 隨身碟 / 兩者合一，自動偵測分叉衝突並提供三種處理選項
+- `scripts/setup_usb.sh`：一鍵製作隨身碟可攜版，可內建 Python venv，在無需安裝任何套件的電腦上直接啟動
+
+### Changed
+- `SETUP.md`：新增「跨地點知識庫同步」章節（含架構說明、日常使用流程、隨身碟製作指引）
+- 資料夾結構說明更新，腳本總數 7 → 11 支
+
+### 同步架構摘要
+| 場景 | 解決方案 |
+|------|---------|
+| 有網路 | `sync_push.sh` / `sync_pull.sh` via GitHub |
+| 無網路 | 隨身碟雙向 rsync |
+| 多裝置自動同步 | iCloud / Google Drive / Dropbox 背景同步 |
+| 分叉衝突 | 自動偵測 + 三選項人工處理 |
+
+---
+
 ## 未來版本規劃
 
 ### [v1.1.0] — 預計 Month 2

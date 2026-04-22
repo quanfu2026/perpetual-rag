@@ -1,6 +1,6 @@
 # Perpetual RAG 永續性知識管理系統 — 完整安裝指南
 
-**版本：v1.0.0** | 發布日期：2026-04-21 | [查看更新記錄](CHANGELOG.md)
+**版本：v1.1.0** | 發布日期：2026-04-21 | [查看更新記錄](CHANGELOG.md)
 
 > **目標**：從零到完整可用，預計 30–45 分鐘。
 > **環境需求**：任何 Mac / Windows / Linux，不需 GPU，不需雲端伺服器。
@@ -387,15 +387,18 @@ my_KnowledgeBase/
 │   ├── 知識圖譜.canvas    ← Obsidian 互動圖
 │   └── 知識圖譜.json      ← D3.js 網頁圖
 │
-└── scripts/               ← 七支自動化腳本
-    ├── setup.py
-    ├── bm25_search.py
-    ├── hallucination_guard.py
-    ├── consistency_check.py
-    ├── writeback.py
-    ├── daily_audit.py
-    ├── vector_search.py
-    └── knowledge_graph.py
+└── scripts/               ← 同步 + 自動化腳本（共 11 支）
+    ├── setup.py            ← 知識庫初始化
+    ├── bm25_search.py      ← BM25 關鍵字搜尋
+    ├── hallucination_guard.py ← 幻覺掃描
+    ├── consistency_check.py   ← 術語一致性稽核
+    ├── writeback.py        ← Append-only 安全回寫
+    ├── daily_audit.py      ← 每日進度快照
+    ├── vector_search.py    ← BM25+TF-IDF 混合搜尋
+    ├── knowledge_graph.py  ← 知識圖譜生成
+    ├── setup_cloud.sh      ← 雲端同步一次性設定
+    ├── sync_push.sh        ← 出門前推送同步
+    └── sync_pull.sh        ← 抵達後拉取同步
 ```
 
 ---
@@ -422,6 +425,91 @@ my_KnowledgeBase/
 | 第五層 | 一致性 | 跨節點術語稽核 | `python3 scripts/consistency_check.py` |
 
 **實驗驗證結果：幻覺率 59% → 3%（降幅 -95%）**
+
+---
+
+## 跨地點知識庫同步
+
+在多台電腦或外出攜帶隨身碟工作時，使用以下三支腳本保持知識庫一致性。
+
+### 同步架構
+
+```
+甲地（家）──push──> GitHub ──pull──> 乙地（出差）
+甲地（家）<──pull── GitHub <──push── 乙地（出差）
+甲地（家）──USB────────────────────> 乙地（無網路）
+雲端硬碟（iCloud / Google Drive / Dropbox）背景自動同步
+```
+
+| 腳本 | 時機 | 指令 |
+|------|------|------|
+| `setup_cloud.sh` | 首次設定（只需一次）| `bash scripts/setup_cloud.sh` |
+| `sync_push.sh` | 出門前執行 | `bash scripts/sync_push.sh` |
+| `sync_pull.sh` | 抵達後執行 | `bash scripts/sync_pull.sh` |
+| `setup_usb.sh` | 製作隨身碟（只需一次）| `bash scripts/setup_usb.sh /Volumes/USB名稱` |
+
+---
+
+### 第一次設定：選擇雲端服務
+
+```bash
+bash ~/my_KnowledgeBase/scripts/setup_cloud.sh
+```
+
+腳本會自動偵測已安裝的雲端服務並列出選單：
+
+```
+  [1] iCloud Drive ✅
+  [2] Google Drive ✅
+  [3] Dropbox ✅
+  [4] OneDrive ✅
+  [5] 自訂路徑
+```
+
+選擇後，知識庫會自動同步到雲端，**其他裝置只要登入同一帳號即可存取**。
+
+---
+
+### 日常使用流程
+
+**出門前（甲地）：**
+```bash
+bash ~/my_KnowledgeBase/scripts/sync_push.sh
+```
+依序執行：
+1. Git commit + push（推送至 GitHub）
+2. 詢問是否同步到隨身碟
+3. 同步到已設定的雲端硬碟
+
+**抵達後（乙地）：**
+```bash
+bash ~/my_KnowledgeBase/scripts/sync_pull.sh
+```
+選擇同步來源：
+- `[1] GitHub`（有網路，推薦）
+- `[2] 隨身碟`（無網路備援）
+- `[3] 兩者都同步`（隨身碟內容再推回 GitHub）
+
+腳本自動偵測衝突，並提供三個處理選項（保留本地 / 採用遠端 / 自動合併）。
+
+---
+
+### 製作隨身碟（可攜版）
+
+```bash
+bash ~/my_KnowledgeBase/scripts/setup_usb.sh /Volumes/你的隨身碟
+```
+
+腳本會：
+1. 同步知識庫到隨身碟
+2. 可選建立內建 Python venv（含所有依賴）
+3. 生成 `start.sh` 一鍵啟動腳本
+
+在其他電腦使用：
+```bash
+bash /Volumes/隨身碟/perpetual-rag/start.sh
+```
+> **注意**：Claude Code 仍需目標電腦安裝（`npm install -g @anthropic-ai/claude-code`）及 Anthropic API Key。
 
 ---
 

@@ -3,7 +3,7 @@
 # Perpetual RAG 永續性知識管理系統 — 一鍵安裝腳本
 # =============================================================================
 # 執行方式（未來上傳 GitHub 後）：
-#   curl -fsSL https://raw.githubusercontent.com/YOUR/perpetual-rag/main/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/quanfu2026/perpetual-rag/main/install.sh | bash
 #
 # 本地執行：
 #   bash starter_kit/install.sh
