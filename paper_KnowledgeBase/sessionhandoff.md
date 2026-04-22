@@ -6,8 +6,8 @@ tags: []
 source: Claude-Code
 project: paper_KnowledgeBase
 created: 2026-04-19
-last_updated: 2026-04-19
-last_synced: 2026-04-19
+last_updated: 2026-04-22
+last_synced: 2026-04-22
 version: 1.0.0
 linked_code: 
 ---
@@ -20,27 +20,327 @@ linked_code:
 ---
 
 ## 📅 最後更新
-- 日期：2026-04-21（第三十六次，三種一鍵安裝 + GitHub Pages + PyPI 待完成）
+- 日期：2026-04-22（第五十次，版本修正重要紀錄建立）
 - 狀態：收工完整 ✅
 
 ---
 
-## ✅ 第三十六次（2026-04-21）— 三種一鍵安裝 + 部署（PyPI 待完成）
+## ✅ 第五十次（2026-04-22）— 版本修正重要紀錄建立
 
 ### 完成事項
 
 | 任務 | 說明 |
 |------|------|
-| install.sh | Shell 腳本，Mac/Linux 五步驟一鍵安裝 |
-| pip 套件打包 | pyproject.toml + perpetual_rag/ CLI，品質檢查 PASSED |
-| build_release.py | zip 打包工具，完整包 41KB + 精簡包 29KB |
-| GitHub repo 建立 | https://github.com/quanfu2026/perpetual-rag |
-| GitHub Release v1.0.0 | 含兩個 zip 下載 |
-| GitHub Pages | https://quanfu2026.github.io/perpetual-rag/ ✅ 上線 |
-| index.html 安裝網站 | 深色主題，Tab 切換三種 OS，一鍵複製指令 |
-| SETUP.md OS 分流 | Mac/Linux/Windows 三種安裝方式對照表 |
-| 論文附錄 A | 四個開源資源網址 + 安裝指令 + 系統需求表 |
-| bump_version.py | 互動式升版工具（版本管控完整） |
+| 版本修正紀錄_2026-04-22.md | 新建：五大矛盾修正完整紀錄（C1–C5），含章節標記、前後對照、影響位置、知識矯正四步驟範例 |
+| 章節標記加入 | 全文補入 §0A、§0B、§1.1、§1.3、§2.2、§2.3、§4.1、§5.1、§5.3、§6.2、§7.1.2、§7.2 精確位置 |
+
+### 待辦（下次開工優先）
+
+1. **🟢 Word 人工確認**：雙欄排版、圖號 Fig./TABLE、首段不縮排
+2. **🟢 arXiv Endorser 搜尋**（Hugging Face Forums 已備妥發文草稿）
+
+### 當前產出物狀態
+
+```
+論文正式稿.md              — ✅ 最新版（五大矛盾修正完畢）
+論文_Word初審版            — ✅ 120K（2026-04-22 重新產出）
+論文_IEEE_Overleaf         — ✅ 227K（2026-04-22 重新產出）
+版本修正紀錄_2026-04-22.md — ✅ 新建（C1–C5 完整紀錄，章節標記齊全）
+PyPI perpetual-rag         — ✅ 1.0.0
+Zenodo 預印本              — ✅ DOI 10.5281/zenodo.19676404
+hallucination_guard        — ✅ 0 警告
+consistency_check          — ✅ 0 矛盾
+參考文獻                   — ✅ 7 篇（[1]–[7]，已移除 fabricated [4]）
+```
+
+---
+
+## ✅ 第四十九次（2026-04-22）— 論文五大內部矛盾修正
+
+### 完成事項
+
+| # | 矛盾類型 | 修正內容 |
+|---|---------|---------|
+| 1 | **假設性數據混入**（Hit@5/MRR/1000筆）| 刪除 Table 6 外部比較列、修正 7.1.2 節聲明、案例二改用真實 AgeMem 數據 |
+| 2 | **「無雲端」宣稱矛盾**（NotebookLM/Claude 均為雲端）| 9處改為「本地知識主權＋雲端 API 驅動」精確框架 |
+| 3 | **雲端依賴更深層矛盾**（計算卸載自承依賴雲端）| 摘要兩版本重寫；1.3節新增「表 1.3：各元件運算位置」明確揭示 |
+| 4 | **RAM 計算數學錯誤**（500MB 閾值不成立）| 兩處移除錯誤數字，改為 macOS Compressed Memory 機制說明 |
+| 5 | **引用號錯亂＋fabricated [4]**（電商雙階段架構研究組）| 刪除 [4] 全部引用及清單條目；[5]–[8] 前移為 [4]–[7]；移除 os.walk 處的錯誤引用 |
+
+### 待辦（下次開工優先）
+
+1. **🟢 Word / LaTeX 重新產出**：論文正式稿已大幅修訂，雙格式需同步更新
+2. **🟢 Word 人工確認**：雙欄排版、圖號 Fig./TABLE、首段不縮排
+3. **🟢 arXiv Endorser 搜尋**（Hugging Face Forums 已備妥發文草稿）
+
+### 當前產出物狀態
+
+```
+論文正式稿.md           — ✅ 最新版（五大矛盾修正完畢）
+論文_Word初審版         — ✅ 120K（2026-04-22 重新產出）
+論文_IEEE_Overleaf      — ✅ 227K（2026-04-22 重新產出）
+PyPI perpetual-rag      — ✅ 1.0.0
+Zenodo 預印本           — ✅ DOI 已發布
+hallucination_guard     — ✅ 0 警告
+consistency_check       — ✅ 0 矛盾
+參考文獻                — ✅ 7篇（[1]–[7]，已移除 fabricated [4]）
+```
+
+---
+
+## ✅ 第四十四次（2026-04-22）— 永續性RAG知識攝取流程指南
+
+### 完成事項
+
+| 任務 | 說明 |
+|------|------|
+| 永續性RAG知識攝取流程指南.md | 新建：五階段流程（攝取→寫入→索引→品質審計→記憶回寫），含FAQ與最小可行版本 |
+
+### 待辦（下次開工優先）
+
+1. **🟢 Word 人工確認**：雙欄排版、圖號 Fig./TABLE、首段不縮排
+2. **🟢 arXiv 找 Endorser 補投**
+
+### 當前產出物狀態
+
+```
+Zenodo 預印本               — ✅ doi.org/10.5281/zenodo.19676404
+GitHub repo                 — ✅ quanfu2026/perpetual-rag (v1.1.0)
+PyPI 套件                   — ✅ pypi.org/project/perpetual-rag/1.0.0/
+論文正式稿.md               — ✅ 最新版（AgeMem對照 + 6.2修訂 + 引用格式）
+論文_Word初審版             — ✅ 116K（2026-04-22）
+論文_IEEE_Overleaf          — ✅ 230K（2026-04-22）
+知識圖譜                    — ✅ 76節點
+IEEE格式檢查清單            — ✅ 新建
+hallucination_guard         — ✅ 0 警告
+consistency_check           — ✅ 0 矛盾
+永續性RAG知識攝取流程指南   — ✅ 新建（五階段流程，外部讀者版）
+```
+
+---
+
+## ✅ 第四十三次（2026-04-22）— 品質修正全清零
+
+### 完成事項
+
+| 任務 | 說明 |
+|------|------|
+| hallucination_guard | 11處→0處：SOURCE_PATTERNS 新增 `[\d+]` IEEE 引用識別、WHITELIST W4 擴充 |
+| consistency_check | 2個矛盾→0：MRR 範例值修正（0.78→0.898）、α值和MRR加入合理多值白名單 |
+| Principles_Manual.md | MRR 示範值統一為 0.898 |
+| 底層原理手冊/第一章 | MRR 示範值統一為 0.898 |
+| CLAUDE.md | 新增「複查」「品質檢查」兩個對話指令定義 |
+
+### 待辦（下次開工優先）
+
+1. **🟢 Word 人工確認**：雙欄排版、圖號 Fig./TABLE、首段不縮排
+2. **🟢 arXiv 找 Endorser 補投**
+
+### 當前產出物狀態
+
+```
+Zenodo 預印本       — ✅ doi.org/10.5281/zenodo.19676404
+GitHub repo         — ✅ quanfu2026/perpetual-rag (v1.1.0)
+PyPI 套件           — ✅ pypi.org/project/perpetual-rag/1.0.0/
+論文正式稿.md       — ✅ 最新版（AgeMem對照 + 6.2修訂 + 引用格式）
+論文_Word初審版     — ✅ 116K（2026-04-22 12:52）
+論文_IEEE_Overleaf  — ✅ 230K（2026-04-22 12:52）
+知識圖譜            — ✅ 76節點
+IEEE格式檢查清單    — ✅ 新建
+hallucination_guard — ✅ 0 警告
+consistency_check   — ✅ 0 矛盾
+```
+
+---
+
+## ✅ 第四十二次（2026-04-22）— AgeMem 對照論述 + 雙格式產出
+
+### 完成事項
+
+| 任務 | 說明 |
+|------|------|
+| 1.2 節補強 | 加入 AgeMem 四操作對照段落（Recall/Update/Index/Decay Detection vs 本研究實作）|
+| 論文_Word初審版.docx | 重新產出（116K，12:52）|
+| 論文_IEEE_Overleaf.tex | 重新產出（230K，12:52）|
+
+### 待辦（下次開工優先）
+
+1. **🟢 Word 人工確認**：雙欄排版、圖號 Fig./TABLE、首段不縮排
+2. **🟢 arXiv 找 Endorser 補投**
+
+### 當前產出物狀態
+
+```
+Zenodo 預印本       — ✅ doi.org/10.5281/zenodo.19676404
+GitHub repo         — ✅ quanfu2026/perpetual-rag (v1.1.0)
+PyPI 套件           — ✅ pypi.org/project/perpetual-rag/1.0.0/
+論文正式稿.md       — ✅ 最新版（AgeMem 對照 + 6.2修訂 + 引用格式修正）
+論文_Word初審版     — ✅ 116K（2026-04-22 12:52）
+論文_IEEE_Overleaf  — ✅ 230K（2026-04-22 12:52）
+知識圖譜            — ✅ 76節點（2026-04-22 更新）
+IEEE格式檢查清單    — ✅ 新建
+```
+
+---
+
+## ✅ 第四十一次（2026-04-22）— 論文修訂 + 知識圖譜更新
+
+### 完成事項
+
+| 任務 | 說明 |
+|------|------|
+| 6.2 節論述修訂 | 比較基準改為「同硬體純LLM」，刪除「優於外部基準」，加論述定位框 |
+| 1.1 節開場引用 | 加入白話版核心命題：「不是在比算力，而是在比架構智慧」 |
+| IEEE 引用格式 | 27 處 `（來源：[n]）` 批次修正為 `[n]`（IEEE 標準） |
+| 首行縮排 | reference.docx 套用首行縮排 2 字元 |
+| 參考文獻順序 | 確認 [1]–[8] 已是文章出現順序 ✅ |
+| IEEE 格式檢查清單 | 新建 `IEEE格式中文論文檢查清單.md`（九大類） |
+| 論文_Word初審版.docx | 重新產出（116K，含所有修訂） |
+| knowledge_graph.py | 重新執行，更新至 76 節點 117 邊 |
+| Thesis_Architecture.canvas | 6.2 節點右側加修訂標注（紫色文字節點） |
+
+### 待辦（下次開工優先）
+
+1. **🟡 重新產出 `論文_IEEE_Overleaf.tex`**（含今日所有修訂）
+2. **🟢 arXiv 找 Endorser 補投**
+3. **🟢 Word 人工確認**：雙欄排版、圖號 Fig./TABLE、章節首段不縮排
+
+### 當前產出物狀態
+
+```
+Zenodo 預印本       — ✅ doi.org/10.5281/zenodo.19676404
+GitHub repo         — ✅ quanfu2026/perpetual-rag (v1.1.0)
+PyPI 套件           — ✅ pypi.org/project/perpetual-rag/1.0.0/
+論文正式稿.md       — ✅ 最新版（6.2修訂 + 1.1開場句 + 引用格式修正）
+論文_Word初審版     — ✅ 116K（2026-04-22 12:23）
+論文_IEEE_Overleaf  — ✅ 229K（2026-04-22 12:43，含所有修訂）
+知識圖譜            — ✅ 76節點（2026-04-22 更新）
+IEEE格式檢查清單    — ✅ 新建
+```
+
+---
+
+## ✅ 第四十次（2026-04-22）— GitHub token 重建 + PyPI 上架
+
+### 完成事項
+
+| 任務 | 說明 |
+|------|------|
+| GitHub token 撤銷重建 | 舊 token 刪除，新 token 寫入 `~/.claude.json`，MCP Connected ✅ |
+| PyPI 2FA 啟用 | Microsoft Authenticator 綁定完成 |
+| PyPI 套件上架 | `perpetual-rag 1.0.0` 正式上線 https://pypi.org/project/perpetual-rag/1.0.0/ |
+| GitHub Copilot opt-out 記錄 | 記錄於 `index.md` 決策 017，記憶系統同步 |
+
+### 待辦（下次開工優先）
+
+1. ~~**🔴 ILT2026 官網投稿**~~ — ✅ 已截止，記錄完成（2026-04-22）
+2. **🟡 重新產出 `論文_Word初審版.docx`**：第四章仍為舊版
+3. **🟡 重新產出 `論文_IEEE_Overleaf.tex`**：同上
+4. **🟢 arXiv 找 Endorser 補投**：無時間壓力
+
+### 當前產出物狀態
+
+```
+Zenodo 預印本     — ✅ doi.org/10.5281/zenodo.19676404
+GitHub repo       — ✅ quanfu2026/perpetual-rag (v1.1.0)
+GitHub Pages      — ✅ quanfu2026.github.io/perpetual-rag/
+PyPI 套件         — ✅ pypi.org/project/perpetual-rag/1.0.0/
+starter_kit/      — ✅ v1.1.0
+論文正式稿.md     — ✅ 2,786 行（含附錄 A）
+論文_Word初審版   — ⚠️ 需重新產出
+論文_IEEE_Overleaf— ⚠️ 需重新產出
+```
+
+---
+
+## ✅ 第三十九次（2026-04-21）— GitHub MCP 安裝
+
+### 完成事項
+
+| 任務 | 說明 |
+|------|------|
+| GitHub MCP 安裝 | `github · ✓ connected`，設定在 `~/.claude.json` |
+| MCP 說明 | 了解 claude mcp add/list/remove 指令用途 |
+
+### 待辦
+
+- ✅ GitHub token 撤銷重建完成（2026-04-22）— 新 token 已寫入 `~/.claude.json`，MCP Connected
+
+---
+
+## ✅ 第三十八次（2026-04-21）— Zenodo 發布 + DOI + 標題定稿
+
+### 完成事項
+
+| 任務 | 說明 |
+|------|------|
+| 論文標題定稿 | 永續性RAG：資源受限環境下以知識解耦實現幻覺抑制 |
+| 引用 [1][2] 修正 | [1] Yu et al. arXiv:2601.01885；[2] M. Pink et al. arXiv:2502.06975 |
+| 全部 DOI 補齊 | [3]–[8] 六篇引用均有 DOI |
+| arXiv 材料準備 | ILT2026_arXiv.tex + references.bib + submission_info.md |
+| 中文 LaTeX | ILT2026_ZH_arXiv.tex + ILT2026_ZH_overleaf.zip（XeLaTeX）|
+| Zenodo 預印本發布 | DOI: 10.5281/zenodo.19676404 ✅ |
+| README DOI badge | [![DOI](https://zenodo.org/badge/...)] 加入 GitHub README |
+| GitHub 推送 | commit c626ec6，9 個檔案 |
+| 單位更新 | Independent Researcher → 崑山科技大學智慧機器人工程系 |
+
+### 待辦（下次開工優先）
+
+1. **ILT2026 官網投稿**：把 Zenodo DOI 填入投稿表單
+2. ✅ **PyPI 上傳完成**（2026-04-22）— https://pypi.org/project/perpetual-rag/
+3. ⚠️ 重新產出 `論文_Word初審版.docx`
+4. ⚠️ 重新產出 `論文_IEEE_Overleaf.tex`
+5. arXiv 找 Endorser 後補投
+
+### 當前產出物狀態
+
+```
+Zenodo 預印本              — ✅ https://doi.org/10.5281/zenodo.19676404
+GitHub Pages 網站          — ✅ https://quanfu2026.github.io/perpetual-rag/
+GitHub repo v1.1.0         — ✅ https://github.com/quanfu2026/perpetual-rag
+ILT2026_投稿版_英文_v2.docx — ✅ 含 DOI
+ILT2026_投稿版_中文_v1.docx — ✅ 含 DOI
+starter_kit/ v1.1.0        — ✅ 含四支同步腳本
+pip 套件                    — ✅ https://pypi.org/project/perpetual-rag/1.0.0/
+論文_Word初審版.docx        — ⚠️ 需重新產出
+```
+
+---
+
+## ✅ 第三十七次（2026-04-21）— ILT2026 投稿 + 跨地點同步功能（v1.1.0）
+
+### 完成事項
+
+| 任務 | 說明 |
+|------|------|
+| ILT2026_投稿版_英文_v2.docx | 22KB，含 GitHub URL、版本管控章節、Writeback 衝突防護 |
+| ILT2026_投稿版_中文_v1.docx | 23KB，完整中文版六章結構，含研究緣起故事 |
+| setup_cloud.sh | 雲端同步一次性設定，自動偵測 iCloud/Google Drive/Dropbox/OneDrive |
+| sync_push.sh | 出門前三段式推送（Git → 隨身碟 → 雲端），含人工確認 |
+| sync_pull.sh | 抵達後智慧拉取，三選項（GitHub/USB/兩者），含衝突偵測 |
+| setup_usb.sh | 隨身碟可攜部署，可內建 Python venv |
+| SETUP.md v1.1.0 | 新增「跨地點知識庫同步」章節，腳本說明 7→11 支 |
+| CHANGELOG.md | 新增 v1.1.0 條目 |
+| CONTRIBUTORS_LOG.md | 新增 7 筆修改記錄 |
+| VERSION | v1.0.0 → v1.1.0 |
+
+### starter_kit 完整結構（v1.1.0）
+
+```
+starter_kit/
+├── VERSION                     ← v1.1.0
+├── CHANGELOG.md
+├── CONTRIBUTORS_LOG.md
+├── SETUP.md                    ← 含跨地點同步章節
+├── install.sh                  ← Mac/Linux 一鍵安裝
+├── setup_usb.sh                ← 隨身碟可攜部署
+├── setup_cloud.sh              ← 雲端同步設定
+├── sync_push.sh                ← 出門前推送
+├── sync_pull.sh                ← 抵達後拉取
+├── pyproject.toml
+├── perpetual_rag/cli.py
+└── scripts/（11 支腳本）
+```
 
 ### 待辦（下次開工優先）
 
@@ -52,19 +352,21 @@ linked_code:
    - Password：PyPI API Token（`pypi-` 開頭）
 2. ⚠️ 重新產出 `論文_Word初審版.docx`
 3. ⚠️ 重新產出 `論文_IEEE_Overleaf.tex`
-4. ILT2026_投稿版.docx 在 Word 確認排版與頁數
+4. ILT2026 兩份 .docx 在 Word 確認排版與頁數（目標 4–6 頁）
+5. 考慮 git push 同步最新腳本到 GitHub
 
 ### 當前產出物狀態
 
 ```
-GitHub Pages 網站         — ✅ https://quanfu2026.github.io/perpetual-rag/
-GitHub repo v1.0.0        — ✅ https://github.com/quanfu2026/perpetual-rag
-pip 套件（本機打包完成）   — ⚠️ 待 PyPI Email 驗證後上傳
-論文正式稿.md              — ✅ 2,786 行（含附錄 A）
-ILT2026_投稿版.docx        — ✅ 23K
-starter_kit/ v1.0.0        — ✅ git tag 定稿
-論文_Word初審版.docx       — ⚠️ 需重新產出
-論文_IEEE_Overleaf.tex    — ⚠️ 需重新產出
+GitHub Pages 網站              — ✅ https://quanfu2026.github.io/perpetual-rag/
+GitHub repo                    — ✅ https://github.com/quanfu2026/perpetual-rag
+pip 套件（本機打包完成）        — ⚠️ 待 PyPI Email 驗證後上傳
+論文正式稿.md                  — ✅ 2,786 行（含附錄 A）
+ILT2026_投稿版_英文_v2.docx   — ✅ 22KB（~/paper_KnowledgeBase/）
+ILT2026_投稿版_中文_v1.docx   — ✅ 23KB（~/paper_KnowledgeBase/）
+starter_kit/ v1.1.0            — ✅ 含四支同步腳本
+論文_Word初審版.docx           — ⚠️ 需重新產出
+論文_IEEE_Overleaf.tex        — ⚠️ 需重新產出
 ```
 
 ---
