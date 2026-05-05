@@ -1,0 +1,50 @@
+id,category,query,annotator_A_choice,annotator_B_choice,arbitrator_decision,reason
+dev_0004,intent_oriented,我想要找一台適合在 農田巡檢 使用、影像穩定的 空拍機。,doc_drone_057,doc_agri_023,doc_drone_057,simulated arbitration
+dev_0007,exact_specification,請問 PlantWatch-V2-005 支援的 感測類型 是什麼？,doc_agri_005,doc_agri_048,doc_agri_005,simulated arbitration
+dev_0011,exact_specification,FlyMaster-Pro-044 的 最大續航 規格為何？,doc_drone_044,doc_drone_013,doc_drone_044,simulated arbitration
+dev_0052,intent_oriented,什麼 空拍機 適合 山區地形 又能 預算內最划算？,doc_drone_011,doc_drone_017,doc_drone_011,simulated arbitration
+dev_0053,exact_specification,我想查 VoiceMate-V-033 這款的 功能。,doc_iot_033,doc_agri_033,doc_iot_033,simulated arbitration
+dev_0085,exact_specification,請問 AirQ-Pro-005 支援的 連線方式 是什麼？,doc_iot_005,doc_iot_037,doc_iot_005,simulated arbitration
+dev_0103,exact_specification,我想查 HarvestEye-027 這款的 適用作物。,doc_agri_027,doc_iot_015,doc_agri_027,simulated arbitration
+dev_0134,intent_oriented,想買 智慧家電，主要用在 長輩居住空間，希望 省電。,doc_iot_008,doc_drone_024,doc_iot_008,simulated arbitration
+dev_0287,exact_specification,VoiceMate-V-045 的 電源 規格為何？,doc_iot_045,doc_iot_039,doc_iot_045,simulated arbitration
+dev_0298,intent_oriented,我想要找一台適合在 長輩居住空間 使用、跨品牌整合的 智慧家電。,doc_iot_040,doc_agri_065,doc_iot_040,simulated arbitration
+dev_0304,intent_oriented,我想要找一台適合在 稻田監測 使用、雲端可看的 農業感測器。,doc_agri_054,doc_agri_018,doc_agri_054,simulated arbitration
+dev_0340,intent_oriented,推薦一款 海邊強風 場景下、操作簡單的 空拍機。,doc_drone_018,doc_agri_050,doc_drone_018,simulated arbitration
+dev_0412,intent_oriented,什麼 空拍機 適合 婚禮跟拍 又能 操作簡單？,doc_drone_070,doc_iot_001,doc_drone_070,simulated arbitration
+dev_0414,intent_oriented,推薦一款 農田巡檢 場景下、影像穩定的 空拍機。,doc_drone_027,doc_iot_003,doc_drone_027,simulated arbitration
+dev_0434,intent_oriented,我想要找一台適合在 長輩居住空間 使用、省電的 智慧家電。,doc_iot_041,doc_agri_053,doc_iot_041,simulated arbitration
+dev_0446,intent_oriented,想買 智慧家電，主要用在 長輩居住空間，希望 跨品牌整合。,doc_iot_023,doc_agri_070,doc_iot_023,simulated arbitration
+dev_0459,exact_specification,型號 VoiceMate-V-012 的 連線方式 是多少？,doc_iot_012,doc_agri_017,doc_iot_012,simulated arbitration
+dev_0460,intent_oriented,推薦一款 山區地形 場景下、預算內最划算的 空拍機。,doc_drone_019,doc_agri_059,doc_drone_019,simulated arbitration
+dev_0468,intent_oriented,推薦一款 婚禮跟拍 場景下、預算內最划算的 空拍機。,doc_drone_041,doc_drone_048,doc_drone_041,simulated arbitration
+dev_0481,exact_specification,請問 EcoSense-G-058 支援的 功能 是什麼？,doc_iot_058,doc_agri_001,doc_iot_058,simulated arbitration
+test_0509,exact_specification,型號 FlyMaster-Pro-019 的 適用情境 是多少？,doc_drone_019,doc_drone_007,doc_drone_019,simulated arbitration
+test_0517,exact_specification,GreenIoT-S-013 的 覆蓋面積 規格為何？,doc_agri_013,doc_agri_004,doc_agri_013,simulated arbitration
+test_0519,exact_specification,VoiceMate-V-042 的 功能 規格為何？,doc_iot_042,doc_drone_052,doc_iot_042,simulated arbitration
+test_0551,exact_specification,我想查 PlantWatch-V2-029 這款的 通訊協定。,doc_agri_029,doc_iot_046,doc_agri_029,simulated arbitration
+test_0580,intent_oriented,什麼 空拍機 適合 農田巡檢 又能 操作簡單？,doc_drone_002,doc_agri_002,doc_drone_002,simulated arbitration
+test_0605,exact_specification,請問 GreenIoT-S-032 支援的 電池續航 是什麼？,doc_agri_032,doc_agri_055,doc_agri_032,simulated arbitration
+test_0618,intent_oriented,推薦一款 山區地形 場景下、抗風強的 空拍機。,doc_drone_013,doc_agri_020,doc_drone_013,simulated arbitration
+test_0619,exact_specification,請問 HarvestEye-038 支援的 適用作物 是什麼？,doc_agri_038,doc_drone_034,doc_agri_038,simulated arbitration
+test_0631,exact_specification,HarvestEye-058 的 覆蓋面積 規格為何？,doc_agri_058,doc_drone_041,doc_agri_058,simulated arbitration
+test_0637,exact_specification,請問 EcoSense-G-037 支援的 電源 是什麼？,doc_iot_037,doc_agri_050,doc_iot_037,simulated arbitration
+test_0643,exact_specification,VoiceMate-V-042 的 電源 規格為何？,doc_iot_042,doc_drone_056,doc_iot_042,simulated arbitration
+test_0671,exact_specification,型號 CropGuard-7-043 的 感測類型 是多少？,doc_agri_043,doc_iot_004,doc_agri_043,simulated arbitration
+test_0687,exact_specification,型號 DroneMax-7-033 的 最大風阻等級 是多少？,doc_drone_033,doc_iot_051,doc_drone_033,simulated arbitration
+test_0706,intent_oriented,我想要找一台適合在 出租套房 使用、省電的 智慧家電。,doc_iot_033,doc_iot_009,doc_iot_033,simulated arbitration
+test_0748,intent_oriented,想買 農業感測器，主要用在 山坡地作物，希望 雨季耐用。,doc_agri_069,doc_agri_007,doc_agri_069,simulated arbitration
+test_0766,intent_oriented,我想要找一台適合在 公寓套房 使用、安裝簡單的 智慧家電。,doc_iot_013,doc_drone_021,doc_iot_013,simulated arbitration
+test_0795,exact_specification,請問 XYZ-9000-034 支援的 最大風阻等級 是什麼？,doc_drone_034,doc_agri_014,doc_drone_034,simulated arbitration
+test_0844,intent_oriented,我想要找一台適合在 海邊強風 使用、操作簡單的 空拍機。,doc_drone_042,doc_agri_054,doc_drone_042,simulated arbitration
+test_0850,intent_oriented,推薦一款 稻田監測 場景下、雨季耐用的 農業感測器。,doc_agri_011,doc_agri_008,doc_agri_011,simulated arbitration
+test_0868,intent_oriented,我想要找一台適合在 茶園採收期 使用、雨季耐用的 農業感測器。,doc_agri_025,doc_agri_054,doc_agri_025,simulated arbitration
+test_0913,exact_specification,SoilMon-Pro-065 的 覆蓋面積 規格為何？,doc_agri_065,doc_drone_018,doc_agri_065,simulated arbitration
+test_0914,intent_oriented,想買 空拍機，主要用在 夜間拍攝，希望 預算內最划算。,doc_drone_051,doc_agri_052,doc_drone_051,simulated arbitration
+test_0919,exact_specification,VoiceMate-V-028 的 Hub 整合 規格為何？,doc_iot_028,doc_iot_026,doc_iot_028,simulated arbitration
+test_0920,intent_oriented,想買 農業感測器，主要用在 茶園採收期，希望 雲端可看。,doc_agri_026,doc_agri_027,doc_agri_026,simulated arbitration
+test_0921,exact_specification,AirQ-Pro-040 的 Hub 整合 規格為何？,doc_iot_040,doc_agri_028,doc_iot_040,simulated arbitration
+test_0926,intent_oriented,想買 空拍機，主要用在 夜間拍攝，希望 續航長。,doc_drone_045,doc_agri_070,doc_drone_045,simulated arbitration
+test_0930,intent_oriented,什麼 農業感測器 適合 稻田監測 又能 雨季耐用？,doc_agri_002,doc_agri_032,doc_agri_002,simulated arbitration
+test_0984,intent_oriented,推薦一款 果園管理 場景下、雲端可看的 農業感測器。,doc_agri_020,doc_iot_026,doc_agri_020,simulated arbitration
+test_0999,exact_specification,我想查 AirQ-Pro-005 這款的 連線方式。,doc_iot_005,doc_iot_003,doc_iot_005,simulated arbitration
