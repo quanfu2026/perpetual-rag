@@ -4,16 +4,24 @@
 
 set -euo pipefail
 
-PYTHON="${PYTHON:-.venv/bin/python3}"
+# Auto-detect Python: local .venv → parent dir .venv → system python3
+if [ -x ".venv/bin/python3" ]; then
+  PYTHON="${PYTHON:-.venv/bin/python3}"
+elif [ -x "../.venv/bin/python3" ]; then
+  PYTHON="${PYTHON:-../.venv/bin/python3}"
+else
+  PYTHON="${PYTHON:-python3}"
+fi
 
 echo "═══════════════════════════════════════════════════════════════"
 echo "  Perpetual RAG Benchmark — Full Pipeline"
+echo "  Using Python: $PYTHON"
 echo "═══════════════════════════════════════════════════════════════"
 echo ""
 
-if [ ! -x "$PYTHON" ]; then
-  echo "❌ Python venv not found at $PYTHON"
-  echo "   Run: python3.12 -m venv .venv && .venv/bin/pip install -r requirements.txt"
+if ! command -v "$PYTHON" >/dev/null 2>&1 && [ ! -x "$PYTHON" ]; then
+  echo "❌ Python not found at $PYTHON"
+  echo "   Setup: python3.12 -m venv .venv && .venv/bin/pip install -r requirements.txt"
   exit 1
 fi
 

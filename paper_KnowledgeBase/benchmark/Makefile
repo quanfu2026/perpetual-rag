@@ -7,7 +7,8 @@
 #   make stats    # statistics + figures
 #   make clean    # remove generated outputs (keeps source data)
 
-PYTHON := .venv/bin/python3
+# Auto-detect Python: prefer local .venv, fallback to parent dir, then system python3
+PYTHON := $(shell test -x .venv/bin/python3 && echo .venv/bin/python3 || (test -x ../.venv/bin/python3 && echo ../.venv/bin/python3) || echo python3)
 SCRIPTS := scripts
 
 .PHONY: all data eval stats clean install verify
