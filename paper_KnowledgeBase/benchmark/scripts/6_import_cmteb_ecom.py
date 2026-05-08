@@ -75,8 +75,10 @@ def main():
     print(f"   對應 {len(gt_pids)} 個 GT 商品")
 
     # ── 採樣干擾項 ──
+    # NOTE: sorted(...) 必要 — set 差集 list 化的順序受 PYTHONHASHSEED 影響，
+    # 即使 random.seed(42) 已設，shuffle 的輸入仍是非確定性的，會破壞 corpus 可重現性。
     all_pids = set(pid_to_text.keys())
-    distractor_pool = list(all_pids - gt_pids)
+    distractor_pool = sorted(all_pids - gt_pids)
     random.shuffle(distractor_pool)
     distractors = distractor_pool[: args.distractors]
     print(f"   採樣 {len(distractors)} 個干擾項")

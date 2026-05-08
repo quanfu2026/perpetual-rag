@@ -49,42 +49,49 @@ def setup_chinese_font():
 # ── Figure 1: α sweep ──────────────────────────────────────────
 
 def plot_alpha_sweep(R):
-    sweep = R["alpha_sweep_dev"]
-    alphas = sorted(float(a) for a in sweep.keys())
-    hit5 = [sweep[str(a)]["Hit@5"] for a in alphas]
-    mrr = [sweep[str(a)]["MRR"] for a in alphas]
-    best_alpha = float(R["best_alpha"])
+    tfidf_sweep = R["alpha_sweep_dev"]
+    bge_sweep = R.get("bge_hybrid_alpha_sweep_dev", {})
+    alphas = sorted(float(a) for a in tfidf_sweep.keys())
+    tfidf_hit5 = [tfidf_sweep[str(a)]["Hit@5"] for a in alphas]
+    bge_hit5 = [bge_sweep[str(a)]["Hit@5"] for a in alphas] if bge_sweep else None
 
-    fig, ax1 = plt.subplots(figsize=(7, 4.5))
+    tfidf_best = max(alphas, key=lambda a: tfidf_sweep[str(a)]["Hit@5"])
+    bge_best = max(alphas, key=lambda a: bge_sweep[str(a)]["Hit@5"]) if bge_sweep else None
 
-    color1 = "#2E86AB"
-    ax1.plot(alphas, hit5, "o-", color=color1, linewidth=2, markersize=8, label="Hit@5")
-    ax1.set_xlabel(r"$\alpha$ (BM25 weight; $\alpha$=0: Dense only, $\alpha$=1: BM25 only)", fontsize=11)
-    ax1.set_ylabel("Hit@5", color=color1, fontsize=11)
-    ax1.tick_params(axis="y", labelcolor=color1)
-    ax1.set_ylim(min(min(hit5), min(mrr)) * 0.95, 1.0)
-    ax1.grid(True, alpha=0.3)
+    fig, ax = plt.subplots(figsize=(7.5, 4.8))
 
-    ax2 = ax1.twinx()
-    color2 = "#E63946"
-    ax2.plot(alphas, mrr, "s--", color=color2, linewidth=2, markersize=7, label="MRR")
-    ax2.set_ylabel("MRR", color=color2, fontsize=11)
-    ax2.tick_params(axis="y", labelcolor=color2)
+    color_tfidf = "#457B9D"
+    color_bge = "#E63946"
 
-    # 標記最佳點
-    ax1.axvline(best_alpha, color="grey", linestyle=":", alpha=0.7)
-    ax1.annotate(rf"$\alpha^*={best_alpha}$",
-                 xy=(best_alpha, sweep[str(best_alpha)]["Hit@5"]),
-                 xytext=(best_alpha + 0.15, sweep[str(best_alpha)]["Hit@5"] + 0.01),
-                 fontsize=10, fontweight="bold",
-                 arrowprops=dict(arrowstyle="->", color="grey"))
+    ax.plot(alphas, tfidf_hit5, "o-", color=color_tfidf,
+            linewidth=2, markersize=8, label="TF-IDF + BM25 (T config)")
+    if bge_hit5:
+        ax.plot(alphas, bge_hit5, "s-", color=color_bge,
+                linewidth=2, markersize=8, label="BGE + BM25 (T+ config)")
 
-    # 圖例
-    lines1, labels1 = ax1.get_legend_handles_labels()
-    lines2, labels2 = ax2.get_legend_handles_labels()
-    ax1.legend(lines1 + lines2, labels1 + labels2, loc="lower center", fontsize=10)
+    ax.set_xlabel(r"$\alpha$ (BM25 weight; $\alpha$=0: Dense only, $\alpha$=1: BM25 only)", fontsize=11)
+    ax.set_ylabel("Hit@5 (development set)", fontsize=11)
+    all_y = tfidf_hit5 + (bge_hit5 or [])
+    ax.set_ylim(min(all_y) * 0.95, 1.0)
+    ax.grid(True, alpha=0.3)
 
-    plt.title("Fig. 1. α Sweep on Development Set (n=500)", fontsize=12)
+    # 標記兩條曲線之最佳 α*
+    ax.axvline(tfidf_best, color=color_tfidf, linestyle=":", alpha=0.5)
+    ax.annotate(rf"TF-IDF $\alpha^*={tfidf_best}$",
+                xy=(tfidf_best, tfidf_sweep[str(tfidf_best)]["Hit@5"]),
+                xytext=(tfidf_best + 0.15, tfidf_sweep[str(tfidf_best)]["Hit@5"] - 0.02),
+                fontsize=10, color=color_tfidf, fontweight="bold",
+                arrowprops=dict(arrowstyle="->", color=color_tfidf, alpha=0.7))
+    if bge_best is not None:
+        ax.axvline(bge_best, color=color_bge, linestyle=":", alpha=0.5)
+        ax.annotate(rf"BGE $\alpha^*={bge_best}$ (pure BGE)",
+                    xy=(bge_best, bge_sweep[str(bge_best)]["Hit@5"]),
+                    xytext=(bge_best + 0.15, bge_sweep[str(bge_best)]["Hit@5"] + 0.015),
+                    fontsize=10, color=color_bge, fontweight="bold",
+                    arrowprops=dict(arrowstyle="->", color=color_bge, alpha=0.7))
+
+    ax.legend(loc="lower left", fontsize=10)
+    plt.title("Fig. 1. α Sweep on Development Set (n=500): T vs T+ Configurations", fontsize=12)
     plt.tight_layout()
     out_png = FIGS / "fig_alpha_sweep.png"
     out_pdf = FIGS / "fig_alpha_sweep.pdf"
@@ -146,7 +153,7 @@ def plot_conditions(R):
     ax.set_xticklabels([short_labels[c] for c in order], fontsize=10)
     ax.set_ylabel("Hit@5 (95% Wilson CI)", fontsize=11)
     ax.set_ylim(0, 1.05)
-    ax.set_title(f"Fig. 2. Hit@5 across Four Conditions (Test Set, n={n_test})", fontsize=12)
+    ax.set_title(f"Fig. 2. Hit@5 across {len(order)} Conditions (Test Set, n={n_test})", fontsize=12)
     ax.grid(True, axis="y", alpha=0.3)
 
     # 顯著性註記（如果你想在圖中加 *** 標記）

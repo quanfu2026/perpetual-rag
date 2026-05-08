@@ -13,6 +13,7 @@ Stage 8: 加入 BGE / sentence-transformers neural embedding 對照組（T+）�
 
 執行需 ~5-10 分鐘（Mac Mini 2014）。
 """
+import hashlib
 import json
 import time
 from pathlib import Path
@@ -39,10 +40,22 @@ def doc_text(d):
     return f"{d.get('model','')} " + " ".join(d.get("specs", {}).values()) + " " + d.get("description", "")
 
 
+def _texts_hash(texts):
+    h = hashlib.sha256()
+    for t in texts:
+        h.update(t.encode("utf-8"))
+        h.update(b"\x00")
+    return h.hexdigest()
+
+
 def encode_with_cache(model, texts, cache_path, name):
-    if cache_path.exists():
-        print(f"  📂 {name} 載入快取 ({cache_path.stat().st_size // 1024} KB)")
+    hash_path = cache_path.with_suffix(".sha256")
+    expected = _texts_hash(texts)
+    if cache_path.exists() and hash_path.exists() and hash_path.read_text().strip() == expected:
+        print(f"  📂 {name} 載入快取 ({cache_path.stat().st_size // 1024} KB, hash matched)")
         return np.load(cache_path)
+    if cache_path.exists():
+        print(f"  ⚠️  {name} 快取存在但 hash 不符，重新編碼...")
     print(f"  🧠 {name} 編碼中（{len(texts)} 個樣本，CPU）...")
     t0 = time.time()
     emb = model.encode(texts, batch_size=32, show_progress_bar=True,
@@ -50,6 +63,7 @@ def encode_with_cache(model, texts, cache_path, name):
     dt = time.time() - t0
     print(f"  ✅ {name} 完成：{dt:.1f}s ({dt/len(texts)*1000:.1f} ms/sample)")
     np.save(cache_path, emb)
+    hash_path.write_text(expected)
     return emb
 
 
