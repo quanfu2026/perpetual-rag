@@ -20,8 +20,19 @@ linked_code:
 ---
 
 ## 📅 最後更新
-- 日期：2026-05-09（第五十八次，ILT2026 投稿稿據實重寫 + 崑大碩論擴寫至 50 頁完整版）
-- 狀態：收工完整 ✅（兩篇 docx 已產出，待用戶投稿與口試使用）
+- 日期：2026-05-09（第五十八次，ILT2026 + 碩論完成 + v1.0.1 release push + §3.2.2 修正）
+- 狀態：收工完整 ✅（兩篇 docx 已產出、benchmark v1.0.1 已 release、git 工作區清潔）
+
+### 5/9 後續完成（同日延伸工作）
+
+| 項目 | 結果 |
+|------|------|
+| §3.2.2 + 表 3-1 修正 | 原表 5.4 字符為估值錯誤；改為實測 6.8 字符（含 std/Q1/Q3/P90/P99 完整分位數），新增圖 3.2 查詢長度分布直方圖；連帶修正 ch1/ch2/ch5/ch6 共 6 處引述 |
+| 碩論 v3 docx | `~/Downloads/坤大碩論_v3_50頁_據實版_陳銓富.docx` 570 KB |
+| benchmark v1.0.1 GitHub release | https://github.com/quanfu2026/perpetual-rag/releases/tag/v1.0.1（含 CHANGELOG 自動嵌入）|
+| git push | 3 commits + v1.0.1 tag 已上 origin master |
+| sessionhandoff + fig_query_length_dist push | commit 3c9bc47 |
+| `~/.gitignore` 建立 | 解決 macOS `.Trash/` 之 TCC 權限警告 + 順便 ignore 一堆家目錄系統檔案，`git status` 噪音大幅降低 |
 
 ---
 
