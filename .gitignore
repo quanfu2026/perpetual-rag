@@ -136,3 +136,6 @@ paper_KnowledgeBase/*.md
 
 # iCloud 封存目錄（個人/備份內容：Desktop/Documents/Obsidian/論文備份），不該進 public repo
 /iCloud雲碟（封存檔）/
+
+# 合併知識庫（KnowledgeBase + Wenzhong's Brain + paper_KnowledgeBase 三庫合一），個人 vault 不該進 public repo
+/KnowledgeBase_merged/
