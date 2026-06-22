@@ -1,0 +1,138 @@
+# macOS 系統保護目錄（避免 git scan 觸發 TCC 警告）
+.Trash/
+
+# macOS 系統檔案
+.DS_Store
+.CFUserTextEncoding
+.bash_history
+.zsh_history
+.zsh_sessions/
+.lesshst
+.zcompdump
+
+# 系統與套件管理快取
+.cache/
+.npm/
+.nvm/
+.bun/
+.conda/
+.config/
+.docker/
+.local/
+.matplotlib/
+.ollama/
+.rustup/
+.ssh/
+miniforge/
+
+# IDE / 編輯器設定
+.vscode/
+.gemini/
+.claude/
+.claude.json
+.antigravity/
+.clawd/
+.nemoclaw/
+.openclaw/
+.opencode/
+.wacli/
+.n8n/
+.redhat/
+
+# 系統 Library 與 Application 目錄
+Library/
+Applications/
+Movies/
+Music/
+Pictures/
+Public/
+Desktop/
+Documents/
+Downloads/
+
+# Python virtualenv / cache
+.venv/
+__pycache__/
+*.pyc
+
+# ~/Projects/ 個人 cheat sheet / 雷區 / 對外宣布草稿（不推 perpetual-rag GitHub）
+Projects/COMMANDS.md
+Projects/HOW_TO_RECOVER.md
+Projects/RISKS.md
+Projects/SYSTEM_HIGHLIGHTS.md
+Projects/ANNOUNCE_PerpetualRAG_for_public.md
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 2026-05-18 系統審查 #1 — 阻擋 $HOME 大量 untracked 散落檔
+# 來源：互動式逐條儲議 risk register，repo 為 PUBLIC，誤推風險為 critical
+# ──────────────────────────────────────────────────────────────────────────────
+
+# 個人/業務專案目錄（各自有獨立 git 或不該 track）
+/Projects/
+/KnowledgeBase/
+/Wenzhong's Brain/
+/2fm/
+/ai_agent_stable/
+/audio_files/
+/bin/
+/getting-started/
+/money-saver/
+/my_ai_project/
+/openclaw/
+/openclaw-docker/
+/test_mac/
+/trust/
+/video_materials/
+
+# Shell / git / npm 個人設定（可能含 token / signing key）
+# wildcard 覆蓋 .bak/.old/.test/.local 等變種
+/.gitconfig*
+/.npmrc*
+/.zshrc*
+/.zprofile*
+/.bashrc*
+/.bash_profile*
+/.profile*
+/.tmux.conf*
+/.vimrc*
+/.zcompdump*
+
+# Skill-built directory（backup-rollback skill 之 archive 區，加密 archive 不該推 GitHub）
+/.backups/
+
+# 已知敏感內容（OpenAI / Anthropic 紀錄與 token）
+/OpenAI_*
+/anthropic*
+/Anthropic*
+
+# $HOME root level 散落工作檔（單檔模式，不影響子目錄）
+/*.py
+/*.sh
+/*.log
+/*.csv
+/*.json
+/*.yaml
+/*.yml
+/*.html
+/*.ico
+/*.txt
+/Dockerfile*
+/wsgi.py
+/app.py
+
+# $HOME root level 散落 markdown（GUIDE / COMPLETE / TROUBLESHOOTING 模式）
+/*_GUIDE.md
+/*_COMPLETE.md
+/*_TROUBLESHOOTING.md
+/FIXES_*.md
+/AUTOMATION_*.md
+
+# 中文檔名以 # 開頭備忘
+/\#*
+
+# paper_KnowledgeBase 退役後不再追蹤新增物
+paper_KnowledgeBase/.archive/
+paper_KnowledgeBase/*.md
+
+# iCloud 封存目錄（個人/備份內容：Desktop/Documents/Obsidian/論文備份），不該進 public repo
+/iCloud雲碟（封存檔）/
